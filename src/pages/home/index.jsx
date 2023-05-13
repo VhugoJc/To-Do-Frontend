@@ -1,14 +1,13 @@
-import FilterControl from "../../components/FilterControl";
-import ToDoList from "../../components/ToDoCard";
-import TopBar from "../../components/TopBar";
+import Layout from "../../Layout";
+import FilterControl from "../../shared/FilterControl";
+import ToDoList from "../../shared/ToDoCard";
 
 const Home = () => {
     return (
-        <div>
-            <TopBar />
+        <Layout>
             <FilterControl/>
             <ToDoList/>
-        </div>
+        </Layout>
     );
 }
 

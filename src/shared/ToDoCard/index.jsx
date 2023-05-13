@@ -1,6 +1,6 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Row } from "antd";
-import ToDoTable from "../Tables/ToDoTable";
+import ToDoTable from "../../components/Tables/ToDoTable";
 
 const ToDoList = () => {
     return (
