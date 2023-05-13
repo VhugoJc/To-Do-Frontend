@@ -1,4 +1,5 @@
 import FilterControl from "../../components/FilterControl";
+import ToDoList from "../../components/ToDoCard";
 import TopBar from "../../components/TopBar";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
         <div>
             <TopBar />
             <FilterControl/>
+            <ToDoList/>
         </div>
     );
 }
