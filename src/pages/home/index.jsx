@@ -1,9 +1,11 @@
-import Banner from "../../components/TopBar";
+import FilterControl from "../../components/FilterControl";
+import TopBar from "../../components/TopBar";
 
 const Home = () => {
     return (
         <div>
-            <Banner/>
+            <TopBar />
+            <FilterControl/>
         </div>
     );
 }

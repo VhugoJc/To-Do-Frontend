@@ -1,0 +1,23 @@
+@import '../../scss';
+.card-filter{
+    margin: 20px 0 10px 0px;
+    &-col{
+        padding-right:40px;
+    }
+    &-hidden{
+        margin-bottom: 5px;
+        color: $white;
+    }
+    &-label{
+        margin-bottom: 5px;
+        color: $gray300;
+    }
+    &-select{
+        width: 100%;
+    }
+    &-btn{
+        background: $purple;
+        color: $white;
+        width: 100%;
+    }
+}
