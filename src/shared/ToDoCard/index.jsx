@@ -1,8 +1,12 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Row } from "antd";
 import ToDoTable from "../../components/Tables/ToDoTable";
+import Modal from "../../components/Modal";
+import { useState } from "react";
 
 const ToDoList = () => {
+    const [open, setOpen] = useState(true);
+
     return (
         <div>
             <Row>
@@ -10,7 +14,7 @@ const ToDoList = () => {
                 <Col xs={24} md={22}>
                     <Card>
                         <Col md={4} xs={24} className="card-filter-col">
-                            <Button className="card-filter-btn">
+                            <Button onClick={()=>setOpen(true)} className="card-filter-btn">
                                 <PlusOutlined/> New ToDo
                             </Button>
                         </Col>
@@ -21,6 +25,10 @@ const ToDoList = () => {
                 </Col>
                 <Col md={1} />
             </Row>
+            {/* to-do Modal */}
+            <Modal open={open} setOpen={setOpen} title="New To-Do Modal">
+                Hola mundo
+            </Modal>
         </div>
     );
 }
