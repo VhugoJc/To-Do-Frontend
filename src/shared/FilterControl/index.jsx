@@ -10,10 +10,10 @@ const FilterControl = () => {
                 <Col xs={24} md={22}>
                     <Card className="card-filter">
                         <Form>
-                            <Row>
+                            <Row gutter={8}>
                                 <Col className="card-filter-col" md={12} xs={24}>
-                                    <p className="card-filter-label">What are you looking for?</p>
-                                    <Input prefix={<SearchOutlined />} placeholder="Name" />
+                                    <p className="card-filter-label">Name</p>
+                                    <Input prefix={<SearchOutlined />} placeholder="What are you looking for?" />
                                 </Col>
                                 <Col md={4} xs={12} className="card-filter-col">
                                     <p className="card-filter-label">Priority</p>

@@ -1,0 +1,35 @@
+@import "../../scss/";
+
+.metrics {
+    margin-top: 10px;
+
+    &-card {
+        margin-bottom: 10px;
+        min-height: 20vh;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+
+        &-byPriority {
+            &-Low {
+                padding: 0px 20px 0px 20px;
+                .ant-statistic-content-value {
+                    color: $green;
+                }
+            }
+            &-Medium {
+                padding: 0px 20px 0px 20px;
+                .ant-statistic-content-value {
+                    color: $yellow;
+                }
+            }
+            &-High {
+                padding: 0px 20px 0px 20px;
+                .ant-statistic-content-value {
+                    color: $coral;
+                }
+            }
+        }
+    }
+}
