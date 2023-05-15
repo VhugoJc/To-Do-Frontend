@@ -3,9 +3,10 @@ import { Button, Card, Col, Row } from "antd";
 import ToDoTable from "../../components/Tables/ToDoTable";
 import Modal from "../../components/Modal";
 import { useState } from "react";
+import ToDoForm from "../../components/Forms/ToDoForm";
 
 const ToDoList = () => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     return (
         <div>
@@ -26,8 +27,8 @@ const ToDoList = () => {
                 <Col md={1} />
             </Row>
             {/* to-do Modal */}
-            <Modal open={open} setOpen={setOpen} title="New To-Do Modal">
-                Hola mundo
+            <Modal open={open} setOpen={setOpen} title="New To-Do">
+                <ToDoForm/>
             </Modal>
         </div>
     );

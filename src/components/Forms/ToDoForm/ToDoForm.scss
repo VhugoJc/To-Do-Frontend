@@ -1,0 +1,9 @@
+@import "../../../scss/index.scss";
+
+.todo-form{
+    &-btn{
+        width: 100%;
+        background: $purple;
+        color: $white;
+    }
+}
