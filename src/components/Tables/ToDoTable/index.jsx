@@ -1,16 +1,9 @@
 import { Button, Popconfirm, Space, Table, Tag, message } from 'antd';
-import Modal from '../../Modal';
-import ToDoForm from '../../Forms/ToDoForm';
-import { useState } from 'react';
+import useTodo from '../../../Hooks/useTodo';
 
 
-const ToDoTable = ({ open, setOpen }) => {
-
-    const [task, setTask] = useState({
-        name:'',
-        date:'',
-        priority:''
-    });
+const ToDoTable = ({ setOpen }) => {
+    const {todoData, setToDoEdit} = useTodo();
 
     const priorityTag = (priority) => {
         let color = 'green';
@@ -44,7 +37,7 @@ const ToDoTable = ({ open, setOpen }) => {
         message.error('Click on No');
     };
     const editTask = (data) => {
-        setTask(data);
+        setToDoEdit(data);
         setOpen(true);
     }
     const columns = [
@@ -66,7 +59,7 @@ const ToDoTable = ({ open, setOpen }) => {
         },
         {
             title: 'Due Date',
-            dataIndex: 'date',
+            dataIndex: 'dueDate',
         },
         {
             title: 'Actions',
@@ -90,27 +83,6 @@ const ToDoTable = ({ open, setOpen }) => {
             )
         },
     ];
-
-    const data = [
-        {
-            key: '1',
-            name: 'Task 1',
-            date: '2022-02-12',
-            priority: 'low',
-        },
-        {
-            key: '2',
-            name: 'Task 2',
-            date: '2022-02-12',
-            priority: 'medium',
-        },
-        {
-            key: '3',
-            name: 'Task 3',
-            date: '2022-02-12',
-            priority: 'high',
-        },
-    ];
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -125,17 +97,14 @@ const ToDoTable = ({ open, setOpen }) => {
         <div>
             <br />
             <Table
-                // rowKey={"id"}
+                rowKey={"id"}
                 rowSelection={{
                     type: 'checkbox',
                     ...rowSelection,
                 }}
                 columns={columns}
-                dataSource={data}
+                dataSource={todoData}
             />
-            <Modal open={open} setOpen={setOpen} title={`Editing ${task.name}`}>
-                <ToDoForm task={task} />
-            </Modal>
         </div>
     );
 }

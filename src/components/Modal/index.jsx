@@ -9,7 +9,7 @@ function Modal({open, setOpen,children, title="New Modal"}) {
     
     return (
         <>
-            <ModalAntd
+            <ModalAntd 
                 title={title}
                 open={open}
                 footer={null}

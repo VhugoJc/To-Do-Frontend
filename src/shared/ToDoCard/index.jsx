@@ -20,14 +20,14 @@ const ToDoList = () => {
                             </Button>
                         </Col>
                         <Col md={24}>
-                            <ToDoTable open={open} setOpen={setOpen}/>
+                            <ToDoTable setOpen={setOpen}/>
                         </Col>
                     </Card>
                 </Col>
                 <Col md={1} />
             </Row>
             {/* to-do Modal */}
-            <Modal open={open} setOpen={setOpen} title="New To-Do">
+            <Modal open={open} setOpen={setOpen} title="New ToDo">
                 <ToDoForm/>
             </Modal>
         </div>
