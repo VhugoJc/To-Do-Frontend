@@ -27,11 +27,11 @@ export const ToDoProvider = ({ children }) => {
     ])
 
     const [toDoEdit, setToDoEdit] = useState({
-        key: 1,
-        name: 'x',
+        id: null,
+        name: '',
         done: false,
-        priority: "high",
-        dueDate: "2023-05-21T15:29:27.524719",
+        priority: "",
+        dueDate: "",
     })
 
     return (

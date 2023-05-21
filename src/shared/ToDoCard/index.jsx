@@ -4,9 +4,22 @@ import ToDoTable from "../../components/Tables/ToDoTable";
 import Modal from "../../components/Modal";
 import { useState } from "react";
 import ToDoForm from "../../components/Forms/ToDoForm";
+import useTodo from "../../Hooks/useTodo";
 
 const ToDoList = () => {
     const [open, setOpen] = useState(false);
+    const {setToDoEdit}=useTodo();
+
+    const setTodoData = () => {
+        setToDoEdit({
+            id: null,
+            name: '',
+            done: false,
+            priority: "",
+            dueDate: "",
+        });
+        setOpen(true);
+    }
 
     return (
         <div>
@@ -15,7 +28,7 @@ const ToDoList = () => {
                 <Col xs={24} md={22}>
                     <Card>
                         <Col md={4} xs={24} className="card-filter-col">
-                            <Button onClick={()=>setOpen(true)} className="card-filter-btn">
+                            <Button onClick={()=>setTodoData()} className="card-filter-btn">
                                 <PlusOutlined/> New ToDo
                             </Button>
                         </Col>
