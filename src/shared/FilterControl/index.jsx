@@ -10,6 +10,7 @@ const FilterControl = () => {
     
     useEffect(()=>{
         form.setFieldsValue(filterData);
+        // eslint-disable-next-line
     },[]);
 
     const onFinish = (value) => {
@@ -23,6 +24,7 @@ const FilterControl = () => {
                 <Col xs={24} md={22}>
                     <Card className="card-filter">
                         <Form
+                        layout="vertical"
                         form={form}
                         onFinish={onFinish}
                         >
