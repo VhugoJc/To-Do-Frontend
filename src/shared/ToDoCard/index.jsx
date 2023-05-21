@@ -7,7 +7,7 @@ import ToDoForm from "../../components/Forms/ToDoForm";
 
 const ToDoList = () => {
     const [open, setOpen] = useState(false);
-
+    
     return (
         <div>
             <Row>
@@ -18,6 +18,7 @@ const ToDoList = () => {
                             <Button onClick={()=>setOpen(true)} className="card-filter-btn">
                                 <PlusOutlined/> New ToDo
                             </Button>
+                            {{}}
                         </Col>
                         <Col md={24}>
                             <ToDoTable open={open} setOpen={setOpen}/>
