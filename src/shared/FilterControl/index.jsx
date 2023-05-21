@@ -1,8 +1,11 @@
 import { Button, Card, Col, Form, Input, Row, Select } from "antd";
 import { SearchOutlined } from '@ant-design/icons';
 import './FilterControl.scss';
+import useFilter from "../../Hooks/useFilter";
 
 const FilterControl = () => {
+    const {filterData, setFilterData} = useFilter();
+    
     return (
         <div>
             <Row>
