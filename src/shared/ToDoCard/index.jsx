@@ -20,7 +20,7 @@ const ToDoList = () => {
                             </Button>
                         </Col>
                         <Col md={24}>
-                            <ToDoTable/>
+                            <ToDoTable open={open} setOpen={setOpen}/>
                         </Col>
                     </Card>
                 </Col>
