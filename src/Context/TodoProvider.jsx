@@ -1,4 +1,6 @@
-import React, { createContext, useState } from 'react';
+import axios from 'axios';
+import React, { createContext, useEffect, useState } from 'react';
+import {BASEURL} from '../config/url';
 
 const ToDoContext = createContext();
 
@@ -9,6 +11,24 @@ export const ToDoProvider = ({ children }) => {
         priority: 'low',
     });
 
+    const getTodos = async() => {
+        try {
+            const response = await axios.get(BASEURL + '/todos');
+            console.log(response);
+            if(response?.data){
+                setTodoData(response.data.toDos);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    useEffect(()=>{
+        getTodos();
+    },[filterData]);
+
+    
     const [todoData, setTodoData] = useState([
         {
             id: 1,
@@ -40,6 +60,7 @@ export const ToDoProvider = ({ children }) => {
                 filterData, setFilterData,
                 todoData, setTodoData,
                 toDoEdit, setToDoEdit,
+                
             }}
         >
             {children}
