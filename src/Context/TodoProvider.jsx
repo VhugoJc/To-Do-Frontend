@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import {BASEURL} from '../config/url';
 import { message } from 'antd';
-
+import useModal from '../Hooks/useModal';
 
 const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
+    const {setIsOpen} = useModal();
     const [refresh,setRefresh] = useState(true);
     const [todoData, setTodoData] = useState([]);
-
     const [toDoEdit, setToDoEdit] = useState({
         id: null,
         name: '',
@@ -26,7 +26,6 @@ export const ToDoProvider = ({ children }) => {
     const getTodos = async() => {
         try {
             const response = await axios.get(BASEURL + '/todos');
-            console.log(response);
             if(response?.data){
                 setTodoData(response.data.toDos);
             }
@@ -37,10 +36,10 @@ export const ToDoProvider = ({ children }) => {
     const postToDo = async(value) => {
         try {
             const response = await axios.post(BASEURL + '/todos',value);
-            console.log(response);
             if(response?.data){
                 message.success("To Do Created successfully");
                 setRefresh(true);
+                setIsOpen(false);
             }
         } catch (error) {
             console.log(error);

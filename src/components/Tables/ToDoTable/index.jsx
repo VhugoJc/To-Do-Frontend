@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Space, Table, Tag, message } from 'antd';
+import { Button, Popconfirm, Space, Table, Tag } from 'antd';
 import useTodo from '../../../Hooks/useTodo';
 import useModal from '../../../Hooks/useModal';
 
@@ -31,13 +31,9 @@ const ToDoTable = () => {
         )
     }
     const confirm = (e) => {
-        console.log(e);
-        message.success('Click on Yes');
+        
     };
-    const cancel = (e) => {
-        console.log(e);
-        message.error('Click on No');
-    };
+
     const editTask = (data) => {
         setToDoEdit(data);
         setIsOpen(true);
@@ -76,7 +72,6 @@ const ToDoTable = () => {
                             title="Delete the task"
                             description="Are you sure to delete this task?"
                             onConfirm={confirm}
-                            onCancel={cancel}
                             okText="Yes"
                             cancelText="No"
                         >

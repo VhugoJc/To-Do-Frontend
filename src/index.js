@@ -8,12 +8,12 @@ import { ModalProvider } from './Context/ModalProvder';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ToDoProvider>
-    <ModalProvider>
+  <ModalProvider>
+    <ToDoProvider>
       <React.StrictMode>
         <Home />
       </React.StrictMode>
-    </ModalProvider>
-  </ToDoProvider>
+    </ToDoProvider>
+  </ModalProvider>
 );
 reportWebVitals();
