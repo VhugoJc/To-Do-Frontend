@@ -1,14 +1,14 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
-import {BASEURL} from '../config/url';
+import { BASEURL } from '../config/url';
 import { message } from 'antd';
 import useModal from '../Hooks/useModal';
 
 const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
-    const {setIsOpen} = useModal();
-    const [refresh,setRefresh] = useState(true);
+    const { setIsOpen } = useModal();
+    const [refresh, setRefresh] = useState(true);
     const [todoData, setTodoData] = useState([]);
     const [toDoEdit, setToDoEdit] = useState({
         id: null,
@@ -23,20 +23,20 @@ export const ToDoProvider = ({ children }) => {
         priority: 'low',
     });
 
-    const getTodos = async() => {
+    const getTodos = async () => {
         try {
             const response = await axios.get(BASEURL + '/todos');
-            if(response?.data){
+            if (response?.data) {
                 setTodoData(response.data.toDos);
             }
         } catch (error) {
             console.log(error);
         }
     }
-    const postToDo = async(value) => {
+    const postToDo = async (value) => {
         try {
-            const response = await axios.post(BASEURL + '/todos',value);
-            if(response?.data){
+            const response = await axios.post(BASEURL + '/todos', value);
+            if (response?.data) {
                 message.success("To Do Created successfully");
                 setRefresh(true);
                 setIsOpen(false);
@@ -46,18 +46,30 @@ export const ToDoProvider = ({ children }) => {
             message.error("Error");
         }
     }
-    useEffect(()=>{
+
+    const deleteToDo = async (id) => {
+        try {
+            const response = await axios.delete(BASEURL + '/todo/' + id);
+            message.success("To Do Deleted successfully");
+            setRefresh(true);
+            setIsOpen(false);
+        } catch (error) {
+            console.log(error);
+            message.error("Error");
+        }
+    }
+    useEffect(() => {
         getTodos();
         setRefresh(false);
-    },[filterData,refresh]);
-    
+    }, [filterData, refresh]);
+
     return (
         <ToDoContext.Provider
             value={{
                 filterData, setFilterData,
                 todoData, setTodoData,
                 toDoEdit, setToDoEdit,
-                postToDo
+                postToDo, deleteToDo
             }}
         >
             {children}

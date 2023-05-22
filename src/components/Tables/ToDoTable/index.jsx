@@ -6,6 +6,7 @@ import useModal from '../../../Hooks/useModal';
 const ToDoTable = () => {
     const {todoData, setToDoEdit} = useTodo();
     const {setIsOpen, setTitle} = useModal(); 
+    const {deleteToDo} = useTodo();
 
     const priorityTag = (priority) => {
         let color = 'green';
@@ -31,7 +32,7 @@ const ToDoTable = () => {
         )
     }
     const confirm = (e) => {
-        
+        deleteToDo(e.id)
     };
 
     const editTask = (data) => {
@@ -71,7 +72,7 @@ const ToDoTable = () => {
                         <Popconfirm
                             title="Delete the task"
                             description="Are you sure to delete this task?"
-                            onConfirm={confirm}
+                            onConfirm={()=>confirm(data)}
                             okText="Yes"
                             cancelText="No"
                         >
