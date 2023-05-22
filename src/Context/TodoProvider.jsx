@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 import {BASEURL} from '../config/url';
+import { message } from 'antd';
+
 
 const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
+    const [refresh,setRefresh] = useState(true);
     const [filterData, setFilterData] = useState({
         name: '',
         status: 'done',
@@ -22,29 +25,26 @@ export const ToDoProvider = ({ children }) => {
             console.log(error);
         }
     }
-
+    const postToDo = async(value) => {
+        try {
+            const response = await axios.post(BASEURL + '/todos',value);
+            console.log(response);
+            if(response?.data){
+                message.success("To Do Created successfully");
+                setRefresh(true);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect(()=>{
         getTodos();
-    },[filterData]);
+        setRefresh(false);
+    },[filterData,refresh]);
 
     
-    const [todoData, setTodoData] = useState([
-        {
-            id: 1,
-            name: 'Hugo',
-            done: false,
-            priority: "low",
-            dueDate: "2023-05-21T15:29:27.524719",
-        },
-        {
-            id: 2,
-            name: 'Victor ',
-            done: false,
-            priority: "medium",
-            dueDate: "2023-05-21T15:29:27.524719",
-        }
-    ])
+    const [todoData, setTodoData] = useState([]);
 
     const [toDoEdit, setToDoEdit] = useState({
         id: null,
@@ -60,7 +60,7 @@ export const ToDoProvider = ({ children }) => {
                 filterData, setFilterData,
                 todoData, setTodoData,
                 toDoEdit, setToDoEdit,
-                
+                postToDo
             }}
         >
             {children}

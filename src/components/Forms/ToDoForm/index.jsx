@@ -7,7 +7,7 @@ import useTodo from "../../../Hooks/useTodo";
 function ToDoForm() {
   const [form] = Form.useForm();
   const [isNewTask, setisNewTask] = useState(true);
-  const {toDoEdit} = useTodo();
+  const {toDoEdit, postToDo} = useTodo();
 
   useEffect(()=>{
     form.setFieldsValue(toDoEdit);
@@ -18,7 +18,9 @@ function ToDoForm() {
   },[toDoEdit])
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    if(toDoEdit.id===null){
+      postToDo(values);
+    }
   };
   return (
     <>
@@ -45,7 +47,7 @@ function ToDoForm() {
               label: "Low"
             },
             {
-              value: "meidum",
+              value: "medium",
               label: "Medium"
             },
             {
