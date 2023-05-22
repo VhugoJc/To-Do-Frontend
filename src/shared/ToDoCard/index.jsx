@@ -2,12 +2,14 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Row } from "antd";
 import ToDoTable from "../../components/Tables/ToDoTable";
 import Modal from "../../components/Modal";
-import { useState } from "react";
 import ToDoForm from "../../components/Forms/ToDoForm";
 import useTodo from "../../Hooks/useTodo";
+import useModal from "../../Hooks/useModal";
 
 const ToDoList = () => {
-    const [open, setOpen] = useState(false);
+    const {setIsOpen} = useModal();
+    const {setTitle} = useModal();
+
     const {setToDoEdit}=useTodo();
 
     const setTodoData = () => {
@@ -18,7 +20,8 @@ const ToDoList = () => {
             priority: "",
             dueDate: "",
         });
-        setOpen(true);
+        setIsOpen(true);
+        setTitle("New ToDo");
     }
 
     return (
@@ -33,14 +36,14 @@ const ToDoList = () => {
                             </Button>
                         </Col>
                         <Col md={24}>
-                            <ToDoTable setOpen={setOpen}/>
+                            <ToDoTable/>
                         </Col>
                     </Card>
                 </Col>
                 <Col md={1} />
             </Row>
             {/* to-do Modal */}
-            <Modal open={open} setOpen={setOpen} title="New ToDo">
+            <Modal>
                 <ToDoForm/>
             </Modal>
         </div>

@@ -1,9 +1,11 @@
 import { Button, Popconfirm, Space, Table, Tag, message } from 'antd';
 import useTodo from '../../../Hooks/useTodo';
+import useModal from '../../../Hooks/useModal';
 
 
-const ToDoTable = ({ setOpen }) => {
+const ToDoTable = () => {
     const {todoData, setToDoEdit} = useTodo();
+    const {setIsOpen, setTitle} = useModal(); 
 
     const priorityTag = (priority) => {
         let color = 'green';
@@ -38,7 +40,9 @@ const ToDoTable = ({ setOpen }) => {
     };
     const editTask = (data) => {
         setToDoEdit(data);
-        setOpen(true);
+        setIsOpen(true);
+        setTitle("Editing "+data.name);
+
     }
     const columns = [
         {

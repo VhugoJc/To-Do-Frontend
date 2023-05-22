@@ -8,6 +8,15 @@ const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
     const [refresh,setRefresh] = useState(true);
+    const [todoData, setTodoData] = useState([]);
+
+    const [toDoEdit, setToDoEdit] = useState({
+        id: null,
+        name: '',
+        done: false,
+        priority: "",
+        dueDate: "",
+    })
     const [filterData, setFilterData] = useState({
         name: '',
         status: 'done',
@@ -35,25 +44,14 @@ export const ToDoProvider = ({ children }) => {
             }
         } catch (error) {
             console.log(error);
+            message.error("Error");
         }
     }
-
     useEffect(()=>{
         getTodos();
         setRefresh(false);
     },[filterData,refresh]);
-
     
-    const [todoData, setTodoData] = useState([]);
-
-    const [toDoEdit, setToDoEdit] = useState({
-        id: null,
-        name: '',
-        done: false,
-        priority: "",
-        dueDate: "",
-    })
-
     return (
         <ToDoContext.Provider
             value={{

@@ -13,6 +13,8 @@ function ToDoForm() {
     form.setFieldsValue(toDoEdit);
     if(toDoEdit.id!==null){
       setisNewTask(false);
+    }else{
+      setisNewTask(true);
     }
     // eslint-disable-next-line
   },[toDoEdit])

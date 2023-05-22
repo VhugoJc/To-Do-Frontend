@@ -1,17 +1,18 @@
 import React from 'react'
 import {Modal as ModalAntd} from 'antd';
+import useModal from '../../Hooks/useModal';
 
-function Modal({open, setOpen,children, title="New Modal"}) {
-
+function Modal({children}) {
+    const {isOpen, setIsOpen, title}  = useModal();
     const handleCancel = () => {
-        setOpen(false);
+        setIsOpen(false);
     };
     
     return (
         <>
             <ModalAntd 
                 title={title}
-                open={open}
+                open={isOpen}
                 footer={null}
                 onCancel={handleCancel}
             >
