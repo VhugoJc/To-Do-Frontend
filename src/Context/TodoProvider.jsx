@@ -49,7 +49,7 @@ export const ToDoProvider = ({ children }) => {
 
     const deleteToDo = async (id) => {
         try {
-            const response = await axios.delete(BASEURL + '/todo/' + id);
+            await axios.delete(BASEURL + '/todo/' + id);
             message.success("To Do Deleted successfully");
             setRefresh(true);
             setIsOpen(false);

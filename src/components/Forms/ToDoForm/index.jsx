@@ -60,7 +60,7 @@ function ToDoForm() {
           />
         </Form.Item>
         <Form.Item
-          name="date-picker"
+          name="dueDate"
           label="Due Date"
         >
           <DatePicker style={{ width: "100%" }} />
