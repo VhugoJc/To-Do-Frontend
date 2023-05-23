@@ -22,6 +22,12 @@ export const ToDoProvider = ({ children }) => {
         status: 'done',
         priority: 'low',
     });
+    const [metrics, setMetrics] = useState({
+        high:0,
+        low:0,
+        medium:0,
+        total: 0
+    })
     // Functions:
     const getTodos = async () => {
         try {
@@ -76,7 +82,8 @@ export const ToDoProvider = ({ children }) => {
     const doneTodo = async (id) => {
         try {
             await axios.post(BASEURL + '/todos/' + id + '/done');
-            message.success('To Do marked as done');
+            // message.success('To Do marked as done');
+            getMetrics();
         } catch (error) {
             console.log(error);
             message.error('Error');
@@ -85,15 +92,38 @@ export const ToDoProvider = ({ children }) => {
     const undoneTodo = async (id) => {
         try {
             await axios.put(BASEURL + '/todos/' + id + '/undone');
-            message.success('To Do marked as undone');
+            // message.success('To Do marked as undone');
+            getMetrics();
         } catch (error) {
             console.log(error);
+            message.error('Error');
+        }
+    }
+
+    const getMetrics = async () => {
+        try {
+            const response = await axios.get(BASEURL + '/metrics');
+            if(response?.data){
+                const low = response.data.lowPriorityMinutes;
+                const medium = response.data.mediumPriorityMinutes;
+                const high = response.data.highPriorityMinutes;
+                const total = response.data.totalMinutes;
+
+                setMetrics({
+                    low,
+                    medium,
+                    high,
+                    total
+                })
+            }
+        } catch (error) {
             message.error('Error');
         }
     }
     useEffect(() => {
         getTodos();
         setRefresh(false);
+        getMetrics();
     }, [filterData, refresh]);
 
     return (
@@ -104,7 +134,8 @@ export const ToDoProvider = ({ children }) => {
                 toDoEdit, setToDoEdit,
                 postToDo, deleteToDo,
                 updateTodo, doneTodo,
-                undoneTodo
+                undoneTodo, 
+                metrics, 
             }}
         >
             {children}
