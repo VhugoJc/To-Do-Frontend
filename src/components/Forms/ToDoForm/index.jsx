@@ -3,6 +3,8 @@ import "./ToDoForm.scss";
 import { Button, DatePicker, Form, Input, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import useTodo from "../../../Hooks/useTodo";
+import dayjs from "dayjs";
+
 
 function ToDoForm() {
   const [form] = Form.useForm();
@@ -24,6 +26,14 @@ function ToDoForm() {
       postToDo(values);
     }
   };
+  const dueDateFormat=(date)=>{
+    if(date===null){
+      return null
+    }else{
+      return dayjs(date);
+    }
+  }
+  
   return (
     <>
       <Form
@@ -62,6 +72,7 @@ function ToDoForm() {
         <Form.Item
           name="dueDate"
           label="Due Date"
+          getValueProps={(i) => ({value: dueDateFormat(i)})}
         >
           <DatePicker style={{ width: "100%" }} />
         </Form.Item>

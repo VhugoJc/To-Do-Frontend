@@ -1,6 +1,7 @@
 import { Button, Popconfirm, Space, Table, Tag } from 'antd';
 import useTodo from '../../../Hooks/useTodo';
 import useModal from '../../../Hooks/useModal';
+import dayjs from 'dayjs';
 
 
 const ToDoTable = () => {
@@ -61,6 +62,11 @@ const ToDoTable = () => {
         {
             title: 'Due Date',
             dataIndex: 'dueDate',
+            render: (element,data)=> (
+                <>
+                    {dayjs(element).format('DD/MM/YYYY')}
+                </>
+            )
         },
         {
             title: 'Actions',
