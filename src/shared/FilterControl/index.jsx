@@ -44,7 +44,7 @@ const FilterControl = () => {
                                     >
                                     <Select
                                         className="card-filter-select"
-                                        options={[{ value: 'low', label: 'Low' }, { value: 'high', label: 'High' }, { value: 'all', label: 'All' }]}
+                                        options={[{ value: 'low', label: 'Low' }, { value: 'medium', label: 'Medium' }, { value: 'high', label: 'High' }, { value: 'all', label: 'All' }]}
                                     />
                                     </Form.Item>
                                 </Col>

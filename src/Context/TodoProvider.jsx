@@ -19,19 +19,30 @@ export const ToDoProvider = ({ children }) => {
     })
     const [filterData, setFilterData] = useState({
         name: '',
-        status: 'done',
-        priority: 'low',
+        status: 'all',
+        priority: 'all',
     });
     const [metrics, setMetrics] = useState({
         high:0,
         low:0,
         medium:0,
         total: 0
-    })
+    });
+
     // Functions:
     const getTodos = async () => {
+        let params = "?";
+        if(filterData.name!==""){
+            params+="name="+filterData.name+"&";
+        }
+        if(filterData.priority!=='all'){
+            params+="priority="+filterData.priority+"&";
+        }
+        if(filterData.priority!=="all"){
+            params+="status="+filterData.status+"&";
+        }
         try {
-            const response = await axios.get(BASEURL + '/todos');
+            const response = await axios.get(BASEURL + '/todos'+params);
             if (response?.data) {
                 setTodoData(response.data.toDos);
             }
@@ -124,6 +135,7 @@ export const ToDoProvider = ({ children }) => {
         getTodos();
         setRefresh(false);
         getMetrics();
+        // eslint-disable-next-line
     }, [filterData, refresh]);
 
     return (
