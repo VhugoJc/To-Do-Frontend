@@ -22,7 +22,7 @@ export const ToDoProvider = ({ children }) => {
         status: 'done',
         priority: 'low',
     });
-
+    // Functions:
     const getTodos = async () => {
         try {
             const response = await axios.get(BASEURL + '/todos');
@@ -58,6 +58,20 @@ export const ToDoProvider = ({ children }) => {
             message.error("Error");
         }
     }
+
+    const updateTodo = async (id, body) => {
+        try {
+            const response = await axios.put(BASEURL + '/todos/'+id, body);
+            if(response?.data){
+                message.success('To Do '+response.data.name+' updated');
+                setRefresh(true);
+                setIsOpen(false);
+            }
+        } catch (error) {
+            console.log(error);
+            message.error('Error');
+        }
+    }
     useEffect(() => {
         getTodos();
         setRefresh(false);
@@ -69,7 +83,8 @@ export const ToDoProvider = ({ children }) => {
                 filterData, setFilterData,
                 todoData, setTodoData,
                 toDoEdit, setToDoEdit,
-                postToDo, deleteToDo
+                postToDo, deleteToDo,
+                updateTodo
             }}
         >
             {children}

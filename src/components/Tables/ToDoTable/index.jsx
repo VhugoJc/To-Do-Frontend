@@ -64,7 +64,7 @@ const ToDoTable = () => {
             dataIndex: 'dueDate',
             render: (element,data)=> (
                 <>
-                    {dayjs(element).format('DD/MM/YYYY')}
+                    {dayjs(element).format('YYYY-MM-DD')}
                 </>
             )
         },

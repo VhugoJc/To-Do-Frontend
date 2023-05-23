@@ -10,6 +10,7 @@ function ToDoForm() {
   const [form] = Form.useForm();
   const [isNewTask, setisNewTask] = useState(true);
   const {toDoEdit, postToDo} = useTodo();
+  const {updateTodo} = useTodo();
 
   useEffect(()=>{
     form.setFieldsValue(toDoEdit);
@@ -24,6 +25,8 @@ function ToDoForm() {
   const onFinish = (values) => {
     if(toDoEdit.id===null){
       postToDo(values);
+    }else{
+      updateTodo(toDoEdit.id,values);
     }
   };
   const dueDateFormat=(date)=>{
