@@ -2,12 +2,24 @@ import { Button, Popconfirm, Space, Table, Tag } from 'antd';
 import useTodo from '../../../Hooks/useTodo';
 import useModal from '../../../Hooks/useModal';
 import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 
 
 const ToDoTable = () => {
     const {todoData, setToDoEdit} = useTodo();
     const {setIsOpen, setTitle} = useModal(); 
-    const {deleteToDo} = useTodo();
+    const {deleteToDo, doneTodo, undoneTodo} = useTodo();
+    const [selected, setSelected] = useState([]);
+
+    useEffect(()=>{
+        const idSelected = todoData.map(item=>{
+            if(item.done===true){
+                return item.id
+            }
+            return null
+        })
+        setSelected(idSelected);
+    },[todoData]);
 
     const priorityTag = (priority) => {
         let color = 'green';
@@ -64,7 +76,11 @@ const ToDoTable = () => {
             dataIndex: 'dueDate',
             render: (element,data)=> (
                 <>
-                    {dayjs(element).format('YYYY-MM-DD')}
+                    {
+                        element===null
+                        ? '-'
+                        : dayjs(element).format('YYYY-MM-DD')
+                    }
                 </>
             )
         },
@@ -90,14 +106,37 @@ const ToDoTable = () => {
         },
     ];
     const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        selectedRowKeys:selected,
+        onChange: (selectedRowKeys, selectedRows, info) => {
+            setSelected(selectedRowKeys);
+        },
+        onSelect: (record, isselected, selectedRows, nativeEvent)=>{
+            if(isselected){
+                doneTodo(record.id);
+            }else{
+                undoneTodo(record.id);
+            }
+        },
+        onSelectAll: (selected, selectedRows, changeRows)=>{
+            
+            if(selected){
+                changeRows.forEach(row=>{
+                    doneTodo(row.id);
+                });
+            }else{
+                changeRows.forEach(row=>{
+                    undoneTodo(row.id);
+                });
+
+            }
         },
         getCheckboxProps: (record) => ({
             disabled: record.name === 'Disabled User',
+            selected: record.done === true,
             // Column configuration not to be checked
             name: record.name,
         }),
+        
     };
     return (
         <div>

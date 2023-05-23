@@ -63,10 +63,29 @@ export const ToDoProvider = ({ children }) => {
         try {
             const response = await axios.put(BASEURL + '/todos/'+id, body);
             if(response?.data){
-                message.success('To Do '+response.data.name+' updated');
+                message.success('To Do updated');
                 setRefresh(true);
                 setIsOpen(false);
             }
+        } catch (error) {
+            console.log(error);
+            message.error('Error');
+        }
+    }
+
+    const doneTodo = async (id) => {
+        try {
+            await axios.post(BASEURL + '/todos/' + id + '/done');
+            message.success('To Do marked as done');
+        } catch (error) {
+            console.log(error);
+            message.error('Error');
+        }
+    }
+    const undoneTodo = async (id) => {
+        try {
+            await axios.put(BASEURL + '/todos/' + id + '/undone');
+            message.success('To Do marked as undone');
         } catch (error) {
             console.log(error);
             message.error('Error');
@@ -84,7 +103,8 @@ export const ToDoProvider = ({ children }) => {
                 todoData, setTodoData,
                 toDoEdit, setToDoEdit,
                 postToDo, deleteToDo,
-                updateTodo
+                updateTodo, doneTodo,
+                undoneTodo
             }}
         >
             {children}

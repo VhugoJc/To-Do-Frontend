@@ -30,7 +30,7 @@ function ToDoForm() {
     }
   };
   const dueDateFormat=(date)=>{
-    if(date===null){
+    if(date===null || typeof date ==="undefined" || date.length===0){
       return null
     }else{
       return dayjs(date);
