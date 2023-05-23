@@ -10,6 +10,11 @@ export const ToDoProvider = ({ children }) => {
     const { setIsOpen } = useModal();
     const [refresh, setRefresh] = useState(true);
     const [todoData, setTodoData] = useState([]);
+    const [pagination, setpagination] = useState({
+        totalPages:1,
+        currentPage:1
+    })
+
     const [toDoEdit, setToDoEdit] = useState({
         id: null,
         name: '',
@@ -41,10 +46,16 @@ export const ToDoProvider = ({ children }) => {
         if(filterData.priority!=="all"){
             params+="status="+filterData.status+"&";
         }
+        params+="page="+pagination.currentPage;
         try {
             const response = await axios.get(BASEURL + '/todos'+params);
             if (response?.data) {
                 setTodoData(response.data.toDos);
+                setpagination({
+                    totalPages: response.data.totalPages,
+                    currentPage: response.data.currentPage
+                }
+                )
             }
         } catch (error) {
             console.log(error);
@@ -147,7 +158,8 @@ export const ToDoProvider = ({ children }) => {
                 postToDo, deleteToDo,
                 updateTodo, doneTodo,
                 undoneTodo, 
-                metrics, 
+                metrics, setRefresh,
+                pagination, setpagination
             }}
         >
             {children}

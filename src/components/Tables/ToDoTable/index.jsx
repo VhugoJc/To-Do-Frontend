@@ -6,9 +6,10 @@ import { useEffect, useState } from 'react';
 
 
 const ToDoTable = () => {
-    const {todoData, setToDoEdit} = useTodo();
+    const {todoData, setToDoEdit, setRefresh} = useTodo();
     const {setIsOpen, setTitle} = useModal(); 
     const {deleteToDo, doneTodo, undoneTodo} = useTodo();
+    const {pagination, setpagination} = useTodo();
     const [selected, setSelected] = useState([]);
 
     useEffect(()=>{
@@ -52,7 +53,12 @@ const ToDoTable = () => {
         setToDoEdit(data);
         setIsOpen(true);
         setTitle("Editing "+data.name);
-
+    }
+    const handlePage = (page) => {
+        setRefresh(true);
+        setpagination({
+            currentPage: page
+        })
     }
     const columns = [
         {
@@ -142,6 +148,12 @@ const ToDoTable = () => {
         <div>
             <br />
             <Table
+                pagination={{
+                    total:pagination.totalPages*10,
+                    defaultPageSize:10,
+                    current:pagination.currentPage,
+                    onChange:page=>{handlePage(page)}
+                }}
                 rowKey={"id"}
                 rowSelection={{
                     type: 'checkbox',
