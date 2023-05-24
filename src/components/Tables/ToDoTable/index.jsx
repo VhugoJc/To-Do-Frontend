@@ -13,7 +13,7 @@ const ToDoTable = () => {
     const {deleteToDo, doneTodo, undoneTodo} = useTodo();
     const {pagination, setpagination, } = useTodo();
     const [selected, setSelected] = useState([]);
-    const {sortData, setSortData}= useFilter();
+    const {setSortData}= useFilter();
 
     useEffect(()=>{
         const idSelected = todoData.map(item=>{
