@@ -1,16 +1,19 @@
+import { useEffect, useState } from 'react';
 import { Button, Popconfirm, Space, Table, Tag } from 'antd';
+import dayjs from 'dayjs';
+
 import useTodo from '../../../Hooks/useTodo';
 import useModal from '../../../Hooks/useModal';
-import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import useFilter from "../../../Hooks/useFilter";
 
 
 const ToDoTable = () => {
     const {todoData, setToDoEdit, setRefresh} = useTodo();
     const {setIsOpen, setTitle} = useModal(); 
     const {deleteToDo, doneTodo, undoneTodo} = useTodo();
-    const {pagination, setpagination} = useTodo();
+    const {pagination, setpagination, } = useTodo();
     const [selected, setSelected] = useState([]);
+    const {sortData, setSortData}= useFilter();
 
     useEffect(()=>{
         const idSelected = todoData.map(item=>{
@@ -60,15 +63,42 @@ const ToDoTable = () => {
             currentPage: page
         })
     }
+    const handleTableChange = (pagiination, filters, sorter) => {
+        const {order, field} = sorter;
+        
+        let value = null;
+        if(field==="priority"){
+            if(typeof order !== "undefined"){
+                value=order;
+            }
+            setSortData({
+                sortByDate:null,
+                sortByPriority: value
+            });
+            setRefresh(true);
+        }
+        if(field==="dueDate"){
+            if(typeof order !== "undefined"){
+                value=order;
+            }
+            setSortData({
+                sortByPriority: null,
+                sortByDate: value
+            });
+            setRefresh(true);
+        }
+        
+    }
     const columns = [
         {
             title: 'Name',
-            dataIndex: 'name'
+            dataIndex: 'name',
         },
         {
             title: 'Priority',
             key: 'priority',
             dataIndex: 'priority',
+            sorter: true, // (a,b)=>a.name.length - b.name.length,
             render: (_, { priority }) => (
                 <>
                     {
@@ -80,6 +110,7 @@ const ToDoTable = () => {
         {
             title: 'Due Date',
             dataIndex: 'dueDate',
+            sorter: true, //(a,b)=> dayjs(a.dueDate).unix() - dayjs(b.dueDate).unix(),
             render: (element,data)=> (
                 <>
                     {
@@ -148,6 +179,7 @@ const ToDoTable = () => {
         <div>
             <br />
             <Table
+            onChange={handleTableChange}
             scroll={{y:300}}
                 pagination={{
                     total:pagination.totalPages*10,

@@ -11,8 +11,8 @@ export const ToDoProvider = ({ children }) => {
     const [refresh, setRefresh] = useState(true);
     const [todoData, setTodoData] = useState([]);
     const [pagination, setpagination] = useState({
-        totalPages:1,
-        currentPage:1
+        totalPages: 1,
+        currentPage: 1
     })
 
     const [toDoEdit, setToDoEdit] = useState({
@@ -25,30 +25,50 @@ export const ToDoProvider = ({ children }) => {
     const [filterData, setFilterData] = useState({
         name: '',
         status: 'all',
-        priority: 'all',
+        priority: 'all'
+
     });
+    const [sortData, setSortData] = useState({
+        sortByDate: null,
+        sortByPriority: null
+    });
+
     const [metrics, setMetrics] = useState({
-        high:0,
-        low:0,
-        medium:0,
+        high: 0,
+        low: 0,
+        medium: 0,
         total: 0
     });
 
     // Functions:
     const getTodos = async () => {
+        const {
+            name, priority, status
+        } = filterData;
+        const {
+            sortByDate, sortByPriority
+        } = sortData;
+
         let params = "?";
-        if(filterData.name!==""){
-            params+="name="+filterData.name+"&";
+        if (name !== "") {
+            params += "name=" + name + "&";
         }
-        if(filterData.priority!=='all'){
-            params+="priority="+filterData.priority+"&";
+        if (priority !== 'all') {
+            params += "priority=" + priority + "&";
         }
-        if(filterData.status!=="all"){
-            params+="status="+filterData.status+"&";
+        if (status !== "all") {
+            params += "status=" + status + "&";
         }
-        params+="page="+pagination.currentPage;
+        if (sortByDate !== null) {
+            params += "sortByDate=" + sortByDate + "&";
+        }
+        if (sortByPriority !== null) {
+            params += "sortByPriority=" + sortByPriority + "&";
+        }
+        params += "page=" + pagination.currentPage;
+
         try {
-            const response = await axios.get(BASEURL + '/todos'+params);
+            const response = await axios.get(BASEURL + '/todos' + params);
             if (response?.data) {
                 setTodoData(response.data.toDos);
                 setpagination({
@@ -89,8 +109,8 @@ export const ToDoProvider = ({ children }) => {
 
     const updateTodo = async (id, body) => {
         try {
-            const response = await axios.put(BASEURL + '/todos/'+id, body);
-            if(response?.data){
+            const response = await axios.put(BASEURL + '/todos/' + id, body);
+            if (response?.data) {
                 message.success('To Do updated');
                 setRefresh(true);
                 setIsOpen(false);
@@ -125,7 +145,7 @@ export const ToDoProvider = ({ children }) => {
     const getMetrics = async () => {
         try {
             const response = await axios.get(BASEURL + '/metrics');
-            if(response?.data){
+            if (response?.data) {
                 const low = response.data.lowPriorityMinutes;
                 const medium = response.data.mediumPriorityMinutes;
                 const high = response.data.highPriorityMinutes;
@@ -157,9 +177,10 @@ export const ToDoProvider = ({ children }) => {
                 toDoEdit, setToDoEdit,
                 postToDo, deleteToDo,
                 updateTodo, doneTodo,
-                undoneTodo, 
+                undoneTodo,
                 metrics, setRefresh,
-                pagination, setpagination
+                pagination, setpagination,
+                sortData, setSortData
             }}
         >
             {children}
