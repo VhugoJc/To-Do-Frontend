@@ -1,0 +1,18 @@
+@import "../../scss";
+
+.card-Table{
+    min-height: 520px;
+    height: 100%;
+    .ant-card-body{
+        height: 500px;
+    }
+    .ant-pagination{
+        position: absolute;
+        right: 0;
+        top: 350px;
+        @media (max-width:$screen-md){
+            position:relative;
+            top: 0px;
+        }
+    }
+}

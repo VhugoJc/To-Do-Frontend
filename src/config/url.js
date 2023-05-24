@@ -1,0 +1,1 @@
+export const BASEURL = ' http://192.168.0.12:9090/api';//server address
