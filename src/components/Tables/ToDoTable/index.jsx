@@ -148,6 +148,7 @@ const ToDoTable = () => {
         <div>
             <br />
             <Table
+            scroll={{y:300}}
                 pagination={{
                     total:pagination.totalPages*10,
                     defaultPageSize:10,

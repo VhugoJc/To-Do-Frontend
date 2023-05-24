@@ -43,7 +43,7 @@ export const ToDoProvider = ({ children }) => {
         if(filterData.priority!=='all'){
             params+="priority="+filterData.priority+"&";
         }
-        if(filterData.priority!=="all"){
+        if(filterData.status!=="all"){
             params+="status="+filterData.status+"&";
         }
         params+="page="+pagination.currentPage;

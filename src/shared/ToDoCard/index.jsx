@@ -5,6 +5,7 @@ import Modal from "../../components/Modal";
 import ToDoForm from "../../components/Forms/ToDoForm";
 import useTodo from "../../Hooks/useTodo";
 import useModal from "../../Hooks/useModal";
+import "./ToDoCard.scss";
 
 const ToDoList = () => {
     const {setIsOpen} = useModal();
@@ -29,7 +30,7 @@ const ToDoList = () => {
             <Row>
                 <Col md={1} />
                 <Col xs={24} md={22}>
-                    <Card>
+                    <Card className="card-Table">
                         <Col md={4} xs={24} className="card-filter-col">
                             <Button onClick={()=>setTodoData()} className="card-filter-btn">
                                 <PlusOutlined/> New ToDo
