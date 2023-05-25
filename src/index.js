@@ -6,16 +6,19 @@ import Home from './pages/Home';
 import { ToDoProvider } from './Context/TodoProvider';
 import { ModalProvider } from './Context/ModalProvder';
 import { printAsciiLogo } from './config/ascii_logo';
+import {FilterProvider} from './Context/FilterProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 printAsciiLogo();
 root.render(
-  <ModalProvider>
-    <ToDoProvider>
-      <React.StrictMode>
-        <Home />
-      </React.StrictMode>
-    </ToDoProvider>
-  </ModalProvider>
+  <React.StrictMode>
+    <ModalProvider>
+      <FilterProvider>
+        <ToDoProvider>
+          <Home />
+        </ToDoProvider>
+      </FilterProvider>
+    </ModalProvider>
+  </React.StrictMode>
 );
 reportWebVitals();

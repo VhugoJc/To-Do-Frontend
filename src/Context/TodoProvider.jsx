@@ -6,18 +6,14 @@ import { deleteToDoApi, getToDoApi,
     postToDoApi, putUnoneTodoApi, updateToDoApi 
 } from '../Api/ToDoApi';
 import { getMetricsApi } from '../Api/MetricsApi';
+import useFilter from '../Hooks/useFilter';
 
 const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
-    const { setIsOpen } = useModal();
+    //use state hooks
     const [refresh, setRefresh] = useState(true);
     const [todoData, setTodoData] = useState([]);
-    const [pagination, setpagination] = useState({
-        totalPages: 1,
-        currentPage: 1
-    })
-
     const [toDoEdit, setToDoEdit] = useState({
         id: null,
         name: '',
@@ -25,16 +21,6 @@ export const ToDoProvider = ({ children }) => {
         priority: "",
         dueDate: "",
     })
-    const [filterData, setFilterData] = useState({
-        name: '',
-        status: 'all',
-        priority: 'all'
-
-    });
-    const [sortData, setSortData] = useState({
-        sortByDate: null,
-        sortByPriority: null
-    });
 
     const [metrics, setMetrics] = useState({
         high: 0,
@@ -43,10 +29,19 @@ export const ToDoProvider = ({ children }) => {
         total: 0
     });
 
+    //custom hooks
+    const { setIsOpen } = useModal();
+    const {filterData,sortData,
+        pagination, setpagination
+    } = useFilter();
+
+    // private function to hanle errors
     const handleError = (error)=> {
         message.error("Error")
         console.log(error);
     }
+
+    //public funtions to use API
     const getTodos = () => {
         getToDoApi(filterData, sortData, pagination.currentPage).then(result => {
             setTodoData(result.toDos);
@@ -110,15 +105,12 @@ export const ToDoProvider = ({ children }) => {
     return (
         <ToDoContext.Provider
             value={{
-                filterData, setFilterData,
                 todoData, setTodoData,
                 toDoEdit, setToDoEdit,
                 postToDo, deleteToDo,
                 updateTodo, doneTodo,
                 undoneTodo,
                 metrics, setRefresh,
-                pagination, setpagination,
-                sortData, setSortData
             }}
         >
             {children}
