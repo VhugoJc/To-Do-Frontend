@@ -7,18 +7,19 @@ import { ToDoProvider } from './Context/TodoProvider';
 import { ModalProvider } from './Context/ModalProvder';
 import { printAsciiLogo } from './config/ascii_logo';
 import {FilterProvider} from './Context/FilterProvider';
+import Providers from './Provider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 printAsciiLogo();
 root.render(
-  <React.StrictMode>
-    <ModalProvider>
-      <FilterProvider>
-        <ToDoProvider>
-          <Home />
-        </ToDoProvider>
-      </FilterProvider>
-    </ModalProvider>
-  </React.StrictMode>
+  <Providers // Component to avoid Context Hell
+    providers={[
+      <ModalProvider/>,
+      <FilterProvider/>,
+      <ToDoProvider/>
+    ]}
+  >
+    <Home />
+  </Providers>
 );
 reportWebVitals();
