@@ -11,7 +11,7 @@ const ToDoTable = () => {
     const {todoData, setToDoEdit, setRefresh} = useTodo();
     const {setIsOpen, setTitle} = useModal(); 
     const {deleteToDo, doneTodo, undoneTodo} = useTodo();
-    const {pagination, setpagination, } = useTodo();
+    const {pagination, setpagination, } = useFilter();
     const [selected, setSelected] = useState([]);
     const {setSortData}= useFilter();
 

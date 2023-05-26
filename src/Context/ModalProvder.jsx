@@ -4,7 +4,7 @@ const ModalContext = createContext();
 
 export const ModalProvider = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState("sssss");  
+    const [title, setTitle] = useState("");  
     return (
         <ModalContext.Provider
             value={{ 
