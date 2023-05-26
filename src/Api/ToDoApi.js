@@ -31,19 +31,15 @@ export async function getToDoApi (filter,sort, pagination) { //
         throw error;
     }
 }
-
-
 export async function postToDoApi (body){
     //POST request with axios
     try{
         const response = await axios.post(BASEURL + '/todos', body);
-        return response;
+        return response.data;
     }catch(error){
         throw error;
     }
 }
-
-
 export async function deleteToDoApi (id)  {
     // DELETE request with axios
     try {
@@ -52,8 +48,6 @@ export async function deleteToDoApi (id)  {
         throw error;
     }
 }
-
-
 export async function updateToDoApi(id, body){
     // PUT request with axios
     try {
@@ -63,7 +57,6 @@ export async function updateToDoApi(id, body){
         throw error;
     }
 }
-
 export async function postDoneTodoApi(id)  {
     try {
         await axios.post(BASEURL + '/todos/' + id + '/done');
