@@ -1,7 +1,7 @@
 import axios from "axios"
 import { BASEURL } from "../config/url";
 
-export const getToDoApi = async (filter,sort, pagination) => { // 
+export async function getToDoApi (filter,sort, pagination) { // 
     const {name, priority, status} = filter;
     const {sortByDate, sortByPriority} = sort;
     //filter, sort and pagination parameters 
@@ -33,7 +33,7 @@ export const getToDoApi = async (filter,sort, pagination) => { //
 }
 
 
-export const postToDoApi = async (body)=>{
+export async function postToDoApi (body){
     //POST request with axios
     try{
         const response = await axios.post(BASEURL + '/todos', body);
@@ -44,7 +44,7 @@ export const postToDoApi = async (body)=>{
 }
 
 
-export const deleteToDoApi = async (id) => {
+export async function deleteToDoApi (id)  {
     // DELETE request with axios
     try {
         await axios.delete(BASEURL + '/todo/' + id);
@@ -54,7 +54,7 @@ export const deleteToDoApi = async (id) => {
 }
 
 
-export const updateToDoApi = async(id, body)=>{
+export async function updateToDoApi(id, body){
     // PUT request with axios
     try {
         const response = await axios.put(BASEURL + '/todos/' + id, body);
@@ -64,14 +64,14 @@ export const updateToDoApi = async(id, body)=>{
     }
 }
 
-export const postDoneTodoApi = async (id) => {
+export async function postDoneTodoApi(id)  {
     try {
         await axios.post(BASEURL + '/todos/' + id + '/done');
     } catch (error) {
         throw error;
     }
 }
-export const putUnoneTodoApi = async (id) => {
+export async function putUnoneTodoApi(id){
     try {
         await axios.put(BASEURL + '/todos/' + id + '/undone');
     } catch (error) {
