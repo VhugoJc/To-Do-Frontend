@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import ToDoContext from "../Context/TodoProvider";
+import FilterContext from "../Context/FilterProvider";
 
 const useFilter = () => {
-    return useContext(ToDoContext);;
+    return useContext(FilterContext);;
 }
  
 export default useFilter;

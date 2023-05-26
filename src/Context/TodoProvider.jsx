@@ -1,20 +1,19 @@
-import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
-import { BASEURL } from '../config/url';
 import { message } from 'antd';
 import useModal from '../Hooks/useModal';
+import { deleteToDoApi, getToDoApi, 
+    postDoneTodoApi, 
+    postToDoApi, putUnoneTodoApi, updateToDoApi 
+} from '../Api/ToDoApi';
+import { getMetricsApi } from '../Api/MetricsApi';
+import useFilter from '../Hooks/useFilter';
 
 const ToDoContext = createContext();
 
 export const ToDoProvider = ({ children }) => {
-    const { setIsOpen } = useModal();
+    //use state hooks
     const [refresh, setRefresh] = useState(true);
     const [todoData, setTodoData] = useState([]);
-    const [pagination, setpagination] = useState({
-        totalPages:1,
-        currentPage:1
-    })
-
     const [toDoEdit, setToDoEdit] = useState({
         id: null,
         name: '',
@@ -22,126 +21,80 @@ export const ToDoProvider = ({ children }) => {
         priority: "",
         dueDate: "",
     })
-    const [filterData, setFilterData] = useState({
-        name: '',
-        status: 'all',
-        priority: 'all',
-    });
+
     const [metrics, setMetrics] = useState({
-        high:0,
-        low:0,
-        medium:0,
+        high: 0,
+        low: 0,
+        medium: 0,
         total: 0
     });
 
-    // Functions:
-    const getTodos = async () => {
-        let params = "?";
-        if(filterData.name!==""){
-            params+="name="+filterData.name+"&";
-        }
-        if(filterData.priority!=='all'){
-            params+="priority="+filterData.priority+"&";
-        }
-        if(filterData.status!=="all"){
-            params+="status="+filterData.status+"&";
-        }
-        params+="page="+pagination.currentPage;
-        try {
-            const response = await axios.get(BASEURL + '/todos'+params);
-            if (response?.data) {
-                setTodoData(response.data.toDos);
-                setpagination({
-                    totalPages: response.data.totalPages,
-                    currentPage: response.data.currentPage
-                }
-                )
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    //custom hooks
+    const { setIsOpen } = useModal();
+    const {filterData,sortData,
+        pagination, setpagination
+    } = useFilter();
+
+    // private function to hanle errors
+    const handleError = (error)=> {
+        message.error("Error")
+        console.log(error);
     }
-    const postToDo = async (value) => {
-        try {
-            const response = await axios.post(BASEURL + '/todos', value);
-            if (response?.data) {
-                message.success("To Do Created successfully");
-                setRefresh(true);
-                setIsOpen(false);
-            }
-        } catch (error) {
-            console.log(error);
-            message.error("Error");
-        }
+
+    //public funtions to use API
+    const getTodos = () => {
+        getToDoApi(filterData, sortData, pagination.currentPage).then(result => {
+            setTodoData(result.toDos);
+            setpagination({
+                totalPages: result.totalPages,
+                currentPage: result.currentPage
+            });
+        }).catch(error => handleError(error));
+    }
+
+    const postToDo = (value) => {
+        postToDoApi(value).then((response) => {
+            message.success("To Do Created successfully");
+            setRefresh(true);
+            setIsOpen(false);
+        }).catch((error) => handleError(error))
     }
 
     const deleteToDo = async (id) => {
-        try {
-            await axios.delete(BASEURL + '/todo/' + id);
+        deleteToDoApi(id).then(() => {
             message.success("To Do Deleted successfully");
             setRefresh(true);
+        }).catch(error => handleError(error));
+    }
+
+    const updateTodo =  (id, body) => {
+        updateToDoApi(id,body).then(response=>{
+            message.success('To Do updated');
+            setRefresh(true);
             setIsOpen(false);
-        } catch (error) {
-            console.log(error);
-            message.error("Error");
-        }
+        }).catch(error=>handleError(error))
     }
 
-    const updateTodo = async (id, body) => {
-        try {
-            const response = await axios.put(BASEURL + '/todos/'+id, body);
-            if(response?.data){
-                message.success('To Do updated');
-                setRefresh(true);
-                setIsOpen(false);
-            }
-        } catch (error) {
-            console.log(error);
-            message.error('Error');
-        }
-    }
-
-    const doneTodo = async (id) => {
-        try {
-            await axios.post(BASEURL + '/todos/' + id + '/done');
-            // message.success('To Do marked as done');
+    const doneTodo =  (id) => {
+        postDoneTodoApi(id).then(()=>{
             getMetrics();
-        } catch (error) {
-            console.log(error);
-            message.error('Error');
-        }
+        }).catch(error=>handleError(error));
     }
-    const undoneTodo = async (id) => {
-        try {
-            await axios.put(BASEURL + '/todos/' + id + '/undone');
-            // message.success('To Do marked as undone');
+    const undoneTodo =  (id) => {
+        putUnoneTodoApi(id).then(()=>{
             getMetrics();
-        } catch (error) {
+        }).catch(error=>handleError(error));
+    }
+
+    const getMetrics =  () => {
+        getMetricsApi().then(response=>{
+            setMetrics(response);
+        }).catch(error=>{
             console.log(error);
-            message.error('Error');
-        }
+        })
     }
 
-    const getMetrics = async () => {
-        try {
-            const response = await axios.get(BASEURL + '/metrics');
-            if(response?.data){
-                const low = response.data.lowPriorityMinutes;
-                const medium = response.data.mediumPriorityMinutes;
-                const high = response.data.highPriorityMinutes;
-                const total = response.data.totalMinutes;
 
-                setMetrics({
-                    low,
-                    medium,
-                    high,
-                    total
-                })
-            }
-        } catch (error) {
-            message.error('Error');
-        }
-    }
     useEffect(() => {
         getTodos();
         setRefresh(false);
@@ -152,14 +105,12 @@ export const ToDoProvider = ({ children }) => {
     return (
         <ToDoContext.Provider
             value={{
-                filterData, setFilterData,
                 todoData, setTodoData,
                 toDoEdit, setToDoEdit,
                 postToDo, deleteToDo,
                 updateTodo, doneTodo,
-                undoneTodo, 
+                undoneTodo,
                 metrics, setRefresh,
-                pagination, setpagination
             }}
         >
             {children}
