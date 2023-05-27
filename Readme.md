@@ -1,27 +1,18 @@
-# ToDo App
+# To-Do App
 
-This is a simple ToDo app built using React. It allows users to create, manage, and complete tasks.
+This is a To-Do application built using Create React App, SCSS, Ant Design, useContext, and Jest. The application allows users to manage their tasks and keep track of their to-do list. It is integrated with a Spring Boot API for data storage and retrieval.
 
-## Features
-
-- Create tasks with a title and optional description.
-- Mark tasks as completed.
-- Edit task details.
-- Delete tasks.
-- Filter tasks by status (completed or active).
-- Responsive design.
-
-## Installation
+## Getting Started
 
 1. Clone the repository:
 
 ```bash
-   git clone https://github.com/your-username/todo-app.git
+   git clone https://github.com/VhugoJc/To-Do-Frontend.git
 ```
 2. Navigate to the project directory:
 
 ```bash
-cd todo-app
+cd To-Do-Frontend
 ```
 3. Install dependencies:
 ```bash
@@ -29,36 +20,38 @@ npm install
 ```
 4. Start the development server:
 ```bash
-npm start
+npm run start
 ```
+This will start the application on http://localhost:8080.
 
-5. Open your web browser and visit http://localhost:3000 to see the app in action.
+## Features
+- **Task Management**: Add, edit, and delete tasks.
+- **Task Filtering**: Filter tasks based on their status (completed or pending).
+- **Drag and Drop**: Reorder tasks using drag and drop functionality.
+- **Context API**: Utilize React's Context API to manage state and share data between components.
+- **Ant Design**: Use Ant Design library for UI components and styling.
+- **SCSS**: Customize and style the application using SCSS.
+- **API Integration**: Communicate with the Spring Boot API to fetch and save task data.
+- **Testing with Jest**: Includes unit tests using Jest for testing API funtions.
 
-## Technologies Used
-- React
-- HTML
-- CSS
-- JavaScript
- 
-## Folder Structure
- The project structure is set up as follows:
+## Project Structure
+The project structure follows the standard Create React App convention:
 
-```arduino
-├── public
-│   ├── index.html
-│   └── ...
-├── src
-│   ├── components
-│   │   ├── Task.js
-│   │   └── ...
-│   ├── App.js
-│   ├── index.js
-│   └── ...
-└── ...
+- `src`: Contains the application source code.
+- `components`: Contains reusable React components.
+- `context`: Contains the context provider and related files for managing state.
+- `pages`: Contains the main application pages.
+- `scss`: Contains SCSS files for styling the application.
+- `api`: Contains utility functions calling endpoints.
+- `hooks`: Contains custom hooks based on context.
+- `shared`: Contains code sections with components.
+- `config`: Contains a variable with backend variable.
+
+## Testing
+The application includes unit tests using Jest for frontend components and API functions. To run the tests, use the following command:
+```bash
+npm run test
 ```
-
-The `public` folder contains the main `index.html` file and other static assets.
-The `src` folder contains the React components and the main `App.js` file.
 
 ## Contributing
 Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
@@ -68,8 +61,10 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 3. Make your changes and commit them.
 4. Push your changes to your forked repository.
 5. Submit a pull request describing your changes.
+
 ## License
 This project is licensed under the MIT License.
 ```csharp
 Feel free to customize this README file based on the specifics of your ToDo app.
 ```
+
