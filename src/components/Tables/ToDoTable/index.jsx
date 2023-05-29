@@ -6,6 +6,7 @@ import useTodo from '../../../Hooks/useTodo';
 import useModal from '../../../Hooks/useModal';
 import useFilter from "../../../Hooks/useFilter";
 
+import "./ToDoTable.scss";
 
 const ToDoTable = () => {
     const {todoData, setToDoEdit, setRefresh} = useTodo();
@@ -24,7 +25,6 @@ const ToDoTable = () => {
         })
         setSelected(idSelected);
     },[todoData]);
-
     const priorityTag = (priority) => {
         let color = 'green';
         switch (priority) {
@@ -51,7 +51,6 @@ const ToDoTable = () => {
     const confirm = (e) => {
         deleteToDo(e.id)
     };
-
     const editTask = (data) => {
         setToDoEdit(data);
         setIsOpen(true);
@@ -175,10 +174,32 @@ const ToDoTable = () => {
         }),
         
     };
+
+    const handleRowBackground=(date)=>{
+        if(date===null){
+            return ""
+        }
+        const today = dayjs();
+        const dueDate = dayjs(date);
+        const diff = dueDate.diff(today,'day');
+        // <=7
+        if(diff<=7){
+            return "todo-table-row-red";
+        }
+        if(diff>7 && diff<=14){
+            return "todo-table-row-yellow";
+        }
+        if(diff>14){
+            return "todo-table-row-green";
+        }
+        return "";
+    }
+    
     return (
         <div>
             <br />
             <Table
+            rowClassName={(record,index)=>handleRowBackground(record.dueDate)}
             onChange={handleTableChange}
             scroll={{y:300}}
                 pagination={{
@@ -193,7 +214,7 @@ const ToDoTable = () => {
                     ...rowSelection,
                 }}
                 columns={columns}
-                dataSource={todoData}
+                dataSource={[...todoData]}
             />
         </div>
     );
