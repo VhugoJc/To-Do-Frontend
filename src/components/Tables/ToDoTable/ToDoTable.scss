@@ -1,0 +1,23 @@
+@import "../../../scss";
+.ant-table-row-selected{
+    color: $gray600 !important;
+    td{
+        text-decoration: line-through !important;
+    }
+}
+.ant-table-column-sort{
+    background-color: $gray100 !important;
+}
+.todo-table{
+    
+    &-row-green{
+        background: rgba($green, $alpha: 0.25);
+    }
+    &-row-red{
+        background: rgba($coral, $alpha: 0.25);
+    }
+    &-row-yellow{
+        background: rgba($yellow, $alpha: 0.25);
+    }
+
+}
