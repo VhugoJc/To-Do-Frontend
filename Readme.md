@@ -23,11 +23,11 @@ npm install
 npm run start
 ```
 This will start the application on http://localhost:8080.
+The application requires backend running on http://localhost:9090 if the server is not running in localhost, change the backend base url in `/src/config/url.js`.
 
 ## Features
 - **Task Management**: Add, edit, and delete tasks.
-- **Task Filtering**: Filter tasks based on their status (completed or pending).
-- **Drag and Drop**: Reorder tasks using drag and drop functionality.
+- **Task Filtering**: Filter tasks based on their status (`done` or `undone`), priority (`low`, `medium` and `heigh`) and searching by name.
 - **Context API**: Utilize React's Context API to manage state and share data between components.
 - **Ant Design**: Use Ant Design library for UI components and styling.
 - **SCSS**: Customize and style the application using SCSS.
@@ -44,7 +44,7 @@ The project structure follows the standard Create React App convention:
 - `scss`: Contains SCSS files for styling the application.
 - `api`: Contains utility functions calling endpoints.
 - `hooks`: Contains custom hooks based on context.
-- `shared`: Contains code sections with components.
+- `shared`: Contains code sections made with components.
 - `config`: Contains a variable with backend variable.
 
 ## Testing
@@ -64,7 +64,5 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 
 ## License
 This project is licensed under the MIT License.
-```csharp
-Feel free to customize this README file based on the specifics of your ToDo app.
-```
+
 
